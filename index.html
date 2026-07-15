@@ -1,0 +1,1290 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Dojo Katsuya Ishiyama — Centro de Artes Marciales y Salud Integral en Altos de la Laguna, Maldonado. Karate Shotokan, Jiu-Jitsu Brasilero, Boxeo Femenino, Yoga, Meditación y Masajes.">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#14100D">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="img/icon-192.png">
+<link rel="apple-touch-icon" href="img/icon-180.png">
+<title>Dojo Katsuya Ishiyama</title>
+
+<style>
+  /* ============================================================
+     DOJO KATSUYA ISHIYAMA — app prototipo v0
+     Paleta: sumi (tinta) / washi (papel) / shu (rojo laca) / ai (índigo)
+     Tres pilares: 武 marcial · 和 bienestar · 文 cultura
+     ============================================================ */
+
+  :root {
+    /* --- neutrales: negro con sesgo cálido (tinta sobre madera), no gris azulado --- */
+    --bg:        #14100D;
+    --bg-2:      #1C1714;
+    --bg-3:      #251E19;
+    --line:      #352C25;
+    --line-soft: #271F1A;
+    --ink:       #EFE7DC;
+    --ink-2:     #A99C8E;
+    --ink-3:     #7A6E63;
+
+    /* --- pilares --- */
+    --shu:       #D93B42;   /* 武 vía marcial */
+    --shu-soft:  rgba(217, 59, 66, .13);
+    --wa:        #6E9C7A;   /* 和 bienestar */
+    --wa-soft:   rgba(110, 156, 122, .13);
+    --bun:       #5E8CBF;   /* 文 cultura */
+    --bun-soft:  rgba(94, 140, 191, .13);
+
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+
+    --font-body: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    --font-display: Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
+    --font-jp: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", "MS Mincho", serif;
+    --font-mono: ui-monospace, "Cascadia Code", "SF Mono", Consolas, monospace;
+
+    --shell: 520px;
+    --nav-h: 62px;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg:        #EDEAE3;
+      --bg-2:      #FBFAF7;
+      --bg-3:      #F4F1EB;
+      --line:      #D7D1C6;
+      --line-soft: #E3DED4;
+      --ink:       #1B1714;
+      --ink-2:     #5E564E;
+      --ink-3:     #8A8177;
+      --shu:       #B01F27;
+      --shu-soft:  rgba(176, 31, 39, .09);
+      --wa:        #47705A;
+      --wa-soft:   rgba(71, 112, 90, .09);
+      --bun:       #2E5680;
+      --bun-soft:  rgba(46, 86, 128, .09);
+      --shadow: 0 1px 2px rgba(60,45,30,.06), 0 10px 28px -16px rgba(60,45,30,.28);
+    }
+  }
+
+  /* el toggle del visor gana sobre la media query, en ambas direcciones */
+  :root[data-theme="dark"] {
+    --bg: #14100D; --bg-2: #1C1714; --bg-3: #251E19;
+    --line: #352C25; --line-soft: #271F1A;
+    --ink: #EFE7DC; --ink-2: #A99C8E; --ink-3: #7A6E63;
+    --shu: #D93B42; --shu-soft: rgba(217,59,66,.13);
+    --wa: #6E9C7A;  --wa-soft: rgba(110,156,122,.13);
+    --bun: #5E8CBF; --bun-soft: rgba(94,140,191,.13);
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  }
+  :root[data-theme="light"] {
+    --bg: #EDEAE3; --bg-2: #FBFAF7; --bg-3: #F4F1EB;
+    --line: #D7D1C6; --line-soft: #E3DED4;
+    --ink: #1B1714; --ink-2: #5E564E; --ink-3: #8A8177;
+    --shu: #B01F27; --shu-soft: rgba(176,31,39,.09);
+    --wa: #47705A;  --wa-soft: rgba(71,112,90,.09);
+    --bun: #2E5680; --bun-soft: rgba(46,86,128,.09);
+    --shadow: 0 1px 2px rgba(60,45,30,.06), 0 10px 28px -16px rgba(60,45,30,.28);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- shell ---------- */
+  .shell {
+    max-width: var(--shell);
+    margin: 0 auto;
+    min-height: 100vh;
+    background: var(--bg);
+    border-inline: 1px solid var(--line-soft);
+    padding-bottom: calc(var(--nav-h) + env(safe-area-inset-bottom, 0px) + 20px);
+  }
+  @media (min-width: 560px) {
+    body { background: color-mix(in srgb, var(--bg) 88%, #000 12%); }
+    :root[data-theme="light"] body,
+    .light-fallback { background: var(--bg); }
+  }
+
+  .view { display: none; }
+  .view.is-active { display: block; animation: rise .34s cubic-bezier(.2,.7,.3,1) both; }
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } }
+
+  /* ---------- tipografía ---------- */
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 600; text-wrap: balance; margin: 0; letter-spacing: -.01em; }
+  p { margin: 0; }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .jp { font-family: var(--font-jp); }
+
+  /* ---------- hero ---------- */
+  .hero {
+    position: relative;
+    padding: 40px 22px 30px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+  }
+  .hero::after {
+    /* haz de luz cenital, como la fotografía del dojo */
+    content: "";
+    position: absolute;
+    inset: -40% -20% auto -20%;
+    height: 150%;
+    background: radial-gradient(ellipse 50% 40% at 70% 0%, var(--shu-soft), transparent 70%);
+    pointer-events: none;
+  }
+  .hero > * { position: relative; }
+
+  .portada {
+    display: block;
+    width: 100%;
+    border-bottom: 1px solid var(--line);
+  }
+
+  /* sello hanko */
+  .hanko {
+    width: 54px; height: 54px;
+    border-radius: 5px;
+    background: var(--shu);
+    color: #FFF3ED;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-jp);
+    font-size: 21px;
+    line-height: 1;
+    letter-spacing: -.05em;
+    box-shadow: 0 2px 12px -2px color-mix(in srgb, var(--shu) 55%, transparent);
+  }
+  .hanko span { display: block; transform: translateY(-1px); }
+
+  .hero h1 {
+    font-size: 30px;
+    line-height: 1.12;
+    margin-top: 18px;
+  }
+  .hero .sub {
+    color: var(--ink-2);
+    font-size: 14.5px;
+    margin-top: 8px;
+  }
+  .lema {
+    margin-top: 16px;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--shu);
+  }
+
+  .avales {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-top: 18px;
+  }
+  .aval {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: .06em;
+    padding: 4px 8px;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    color: var(--ink-2);
+    background: var(--bg-2);
+  }
+
+  /* ---------- secciones ---------- */
+  section.blk { padding: 30px 22px; border-bottom: 1px solid var(--line-soft); }
+
+  .blk-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 16px; }
+  .blk-head .kanji {
+    font-family: var(--font-jp);
+    font-size: 17px;
+    color: var(--shu);
+    line-height: 1;
+  }
+  .blk-head h2 { font-size: 19px; flex: 1; }
+
+  /* ---------- linaje: la tesis de la app ---------- */
+  .linaje { display: flex; flex-direction: column; gap: 0; margin-top: 4px; }
+  .nodo {
+    display: grid;
+    grid-template-columns: 26px 1fr;
+    gap: 14px;
+    padding-bottom: 22px;
+    position: relative;
+    opacity: 0;
+    animation: rise .5s cubic-bezier(.2,.7,.3,1) forwards;
+  }
+  .nodo:nth-child(1) { animation-delay: .10s; }
+  .nodo:nth-child(2) { animation-delay: .24s; }
+  .nodo:nth-child(3) { animation-delay: .38s; }
+  .nodo:last-child { padding-bottom: 0; }
+  .nodo .rail { position: relative; display: flex; justify-content: center; }
+  .nodo .dot {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--ink-3);
+    margin-top: 7px;
+    flex: none;
+  }
+  .nodo.now .dot { background: var(--shu); box-shadow: 0 0 0 4px var(--shu-soft); }
+  .nodo:not(:last-child) .rail::after {
+    content: "";
+    position: absolute;
+    top: 20px; bottom: -22px;
+    width: 1px;
+    background: linear-gradient(var(--line) 60%, transparent);
+  }
+  .nodo .nom { font-family: var(--font-display); font-size: 16px; line-height: 1.3; }
+  .nodo.now .nom { color: var(--shu); }
+  .nodo .rol { font-size: 13px; color: var(--ink-2); margin-top: 3px; }
+
+  .nota {
+    margin-top: 16px;
+    padding: 13px 14px;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+  .nota strong { color: var(--ink); font-weight: 600; }
+
+  /* ---------- tres caminos ---------- */
+  .caminos { display: flex; flex-direction: column; gap: 9px; }
+  .camino {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    align-items: center;
+    gap: 14px;
+    padding: 13px 14px;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--c);
+    border-radius: 8px;
+  }
+  .camino .k {
+    font-family: var(--font-jp);
+    font-size: 26px;
+    color: var(--c);
+    text-align: center;
+    line-height: 1;
+  }
+  .camino .t { font-family: var(--font-display); font-size: 15.5px; }
+  .camino .d { font-size: 12.5px; color: var(--ink-2); margin-top: 2px; }
+
+  /* ---------- hoy ---------- */
+  .hoy-lista { display: flex; flex-direction: column; gap: 8px; }
+  .hoy-vacio { color: var(--ink-3); font-size: 14px; font-style: italic; }
+
+  /* ---------- clase (fila de horario) ---------- */
+  .clase {
+    display: grid;
+    grid-template-columns: 62px 1fr;
+    gap: 12px;
+    padding: 12px 13px;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--c);
+    border-radius: 8px;
+    align-items: center;
+  }
+  .clase.tent { border-style: dashed; background: transparent; }
+  .clase .hora {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 13px;
+    color: var(--ink);
+    letter-spacing: -.02em;
+  }
+  .clase .hora small { display: block; color: var(--ink-3); font-size: 11px; }
+  .clase .nom { font-size: 14.5px; font-weight: 550; line-height: 1.25; }
+  .clase .meta { font-size: 12.5px; color: var(--ink-2); margin-top: 2px; }
+
+  .tag-falta {
+    display: inline-block;
+    margin-top: 5px;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+    background: var(--shu-soft);
+    color: var(--shu);
+  }
+  .tag-now {
+    display: inline-block;
+    margin-top: 5px;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+    background: var(--wa-soft);
+    color: var(--wa);
+  }
+
+  /* ---------- filtros ---------- */
+  .filtros {
+    display: flex; gap: 6px; flex-wrap: wrap;
+    margin-bottom: 18px;
+  }
+  .chip {
+    font-family: var(--font-body);
+    font-size: 12.5px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--ink-2);
+    cursor: pointer;
+    transition: background .15s, color .15s, border-color .15s;
+  }
+  .chip:hover { color: var(--ink); border-color: var(--ink-3); }
+  .chip[aria-pressed="true"] {
+    background: var(--c, var(--ink));
+    border-color: var(--c, var(--ink));
+    color: var(--bg);
+    font-weight: 550;
+  }
+
+  .dia-h {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin: 22px 0 9px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .dia-h:first-child { margin-top: 0; }
+  .dia-h::after { content: ""; flex: 1; height: 1px; background: var(--line-soft); }
+  .dia-h.es-hoy { color: var(--shu); }
+  .dia-grupo { display: flex; flex-direction: column; gap: 8px; }
+
+  /* ---------- disciplinas (acordeón) ---------- */
+  .disc { border: 1px solid var(--line); border-radius: 10px; background: var(--bg-2); overflow: hidden; margin-bottom: 9px; }
+  .disc-b {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 15px;
+    background: transparent;
+    border: 0;
+    border-left: 3px solid var(--c);
+    color: inherit;
+    text-align: left;
+    font: inherit;
+    cursor: pointer;
+  }
+  .disc-b .t { font-family: var(--font-display); font-size: 16.5px; }
+  .disc-b .s { font-size: 12.5px; color: var(--ink-2); margin-top: 2px; }
+  .disc-b .caret { color: var(--ink-3); transition: transform .22s; font-size: 12px; }
+  .disc.open .disc-b .caret { transform: rotate(90deg); }
+  .disc-body { padding: 0 16px 16px 18px; display: none; }
+  .disc.open .disc-body { display: block; animation: rise .28s ease both; }
+  .disc-body p { font-size: 14px; color: var(--ink-2); line-height: 1.6; }
+  .fullpass {
+    margin-top: 18px;
+    padding: 18px 16px;
+    border: 1px solid var(--shu);
+    border-radius: 10px;
+    background: var(--shu-soft);
+  }
+  .fullpass h3 { font-size: 18px; }
+  .fullpass .d { font-size: 13.5px; color: var(--ink-2); margin-top: 7px; line-height: 1.55; }
+  .dl { margin-top: 12px; display: grid; grid-template-columns: 88px 1fr; gap: 6px 12px; font-size: 13.5px; }
+  .dl dt { color: var(--ink-3); font-family: var(--font-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; padding-top: 3px; }
+  .dl dd { margin: 0; color: var(--ink); }
+
+  /* ---------- botones ---------- */
+  .btn {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%;
+    margin-top: 14px;
+    padding: 13px 16px;
+    border-radius: 8px;
+    background: var(--shu);
+    color: #FFF3ED;
+    font: inherit;
+    font-size: 14.5px;
+    font-weight: 600;
+    border: 0;
+    text-decoration: none;
+    cursor: pointer;
+    transition: filter .15s, transform .1s;
+  }
+  .btn:hover { filter: brightness(1.08); }
+  .btn:active { transform: translateY(1px); }
+  .btn.ghost {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--ink);
+  }
+  .btn.ghost:hover { border-color: var(--ink-3); }
+  .btn svg { width: 17px; height: 17px; flex: none; }
+
+  a { color: var(--shu); }
+  :focus-visible { outline: 2px solid var(--shu); outline-offset: 2px; border-radius: 4px; }
+
+  /* ---------- maestros ---------- */
+  .maestro { padding: 18px 0; border-bottom: 1px solid var(--line-soft); }
+  .maestro:last-child { border-bottom: 0; padding-bottom: 0; }
+  .maestro-h { display: flex; align-items: baseline; gap: 9px; flex-wrap: wrap; }
+  .maestro-h h3 { font-size: 18px; }
+  .grado {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 3px 7px;
+    border-radius: 3px;
+    background: var(--c-soft);
+    color: var(--c);
+    white-space: nowrap;
+  }
+  .maestro .rol2 { font-size: 13px; color: var(--ink-3); margin-top: 3px; }
+  .maestro .bio { font-size: 14px; color: var(--ink-2); line-height: 1.62; margin-top: 11px; }
+  .hitos { margin-top: 13px; display: flex; flex-direction: column; gap: 7px; }
+  .hito {
+    display: grid; grid-template-columns: 42px 1fr; gap: 11px;
+    font-size: 13px; color: var(--ink-2); line-height: 1.45;
+  }
+  .hito .y {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 12px;
+    color: var(--c);
+  }
+
+  /* ---------- campus ---------- */
+  .libro {
+    padding: 16px;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+  }
+  .flyer {
+    display: block;
+    width: 100%;
+    border-radius: 7px;
+    border: 1px solid var(--line);
+    margin-bottom: 14px;
+    box-shadow: var(--shadow);
+  }
+  .lib-i {
+    display: grid; grid-template-columns: 28px 1fr; gap: 13px;
+    padding: 12px 0;
+    border-bottom: 1px dashed var(--line-soft);
+  }
+  .lib-i:last-child { border-bottom: 0; }
+  .lib-i .k { font-family: var(--font-jp); color: var(--bun); font-size: 16px; text-align: center; padding-top: 2px; }
+  .lib-i .t { font-family: var(--font-display); font-size: 15px; line-height: 1.3; }
+  .lib-i .a { font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); margin-top: 3px; letter-spacing: .03em; }
+  .lib-i .w { font-size: 13px; color: var(--ink-2); margin-top: 5px; line-height: 1.5; }
+  .fotos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .foto-ph {
+    aspect-ratio: 1;
+    border: 1px dashed var(--line);
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    color: var(--ink-3);
+    font-family: var(--font-jp);
+    font-size: 19px;
+    background: var(--bg-2);
+  }
+  .fotos .foto {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    display: block;
+  }
+  .maestro-top { display: flex; gap: 14px; align-items: center; }
+  .avatar {
+    width: 62px; height: 62px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--c);
+    flex: none;
+  }
+  .libro h3 { font-size: 16.5px; line-height: 1.25; }
+  .libro .it { font-family: var(--font-display); font-style: italic; font-size: 13.5px; color: var(--ink-2); margin-top: 2px; }
+  .libro .d { font-size: 13px; color: var(--ink-2); margin-top: 9px; line-height: 1.55; }
+
+  .kun { display: flex; flex-direction: column; gap: 2px; }
+  .kun-i {
+    display: grid; grid-template-columns: 22px 1fr; gap: 14px;
+    padding: 11px 0;
+    border-bottom: 1px dashed var(--line-soft);
+  }
+  .kun-i:last-child { border-bottom: 0; }
+  .kun-i .m { font-family: var(--font-jp); color: var(--shu); font-size: 15px; line-height: 1.5; }
+  .kun-i .es { font-size: 14.5px; line-height: 1.4; }
+  .kun-i .ro { font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); margin-top: 3px; letter-spacing: .02em; }
+
+  .cinturones { display: flex; flex-direction: column; gap: 5px; }
+  .cint {
+    display: grid; grid-template-columns: 16px 1fr auto; align-items: center; gap: 12px;
+    padding: 11px 13px;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 7px;
+  }
+  .cint .sw { width: 14px; height: 14px; border-radius: 3px; border: 1px solid rgba(128,110,95,.5); }
+  .cint .n { font-size: 14px; }
+  .cint .kata { font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); text-align: right; }
+
+  .glos { display: flex; flex-direction: column; }
+  .g-i {
+    display: grid; grid-template-columns: 108px 1fr; gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--line-soft);
+    font-size: 14px;
+  }
+  .g-i:last-child { border-bottom: 0; }
+  .g-i .w { font-family: var(--font-display); }
+  .g-i .w b { display: block; font-family: var(--font-jp); font-weight: 400; font-size: 12px; color: var(--ink-3); }
+  .g-i .m { color: var(--ink-2); font-size: 13.5px; }
+
+  .buscador {
+    width: 100%;
+    padding: 11px 13px;
+    margin-bottom: 6px;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    color: var(--ink);
+    font: inherit;
+    font-size: 14px;
+  }
+  .buscador::placeholder { color: var(--ink-3); }
+
+  /* ---------- contacto ---------- */
+  .contacto { display: flex; flex-direction: column; gap: 9px; }
+
+  /* ---------- nav inferior ---------- */
+  nav.tabs {
+    position: fixed;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: var(--shell);
+    height: calc(var(--nav-h) + env(safe-area-inset-bottom, 0px));
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    background: color-mix(in srgb, var(--bg) 92%, transparent);
+    backdrop-filter: blur(14px);
+    border-top: 1px solid var(--line);
+    z-index: 20;
+  }
+  nav.tabs button {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+    background: none; border: 0;
+    color: var(--ink-3);
+    font: inherit;
+    font-size: 10px;
+    letter-spacing: .02em;
+    cursor: pointer;
+    padding: 0;
+    transition: color .15s;
+  }
+  nav.tabs button svg { width: 21px; height: 21px; }
+  nav.tabs button[aria-current="page"] { color: var(--shu); }
+  nav.tabs button:hover { color: var(--ink); }
+  nav.tabs button[aria-current="page"]:hover { color: var(--shu); }
+
+  .cierre { padding: 26px 22px; text-align: center; }
+  .cierre .k { font-family: var(--font-jp); font-size: 15px; color: var(--ink-3); }
+  .cierre .t { font-size: 12px; color: var(--ink-3); margin-top: 6px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .nodo { opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- ══════════ DOJO (home) ══════════ -->
+  <div class="view is-active" id="v-dojo">
+    <header class="hero">
+      <div class="hanko"><span class="jp">武道</span></div>
+      <h1>Dojo Katsuya Ishiyama</h1>
+      <p class="sub">Centro de Artes Marciales y Salud Integral · Altos de la Laguna, Maldonado</p>
+      <p class="lema">Un dojo · Un camino · Una familia</p>
+      <div class="avales">
+        <span class="aval">ASCJ</span>
+        <span class="aval">AVAL MEC</span>
+        <span class="aval">ISHIYAMA HA URUGUAY</span>
+      </div>
+    </header>
+
+    <img class="portada" src="img/torii.jpg" alt="El torii de madera en la entrada del dojo, con dos karatecas frente a la cabaña">
+
+    <section class="blk">
+      <div class="blk-head"><span class="kanji jp">系</span><h2>El linaje</h2></div>
+      <div class="linaje">
+        <div class="nodo">
+          <div class="rail"><div class="dot"></div></div>
+          <div>
+            <div class="nom">Gichin Funakoshi</div>
+            <div class="rol">Fundador del Karate Shotokan. Llevó el karate de Okinawa a Japón en 1922.</div>
+          </div>
+        </div>
+        <div class="nodo">
+          <div class="rail"><div class="dot"></div></div>
+          <div>
+            <div class="nom">Shihan Katsuya Ishiyama</div>
+            <div class="rol">9.º Dan. Alumno directo de Funakoshi. El dojo lleva su nombre.</div>
+          </div>
+        </div>
+        <div class="nodo now">
+          <div class="rail"><div class="dot"></div></div>
+          <div>
+            <div class="nom">Sensei Nicolás Pereira</div>
+            <div class="rol">5.º Dan, grado otorgado por Ishiyama. Representante de Ishiyama Ha para Uruguay. Director del dojo.</div>
+          </div>
+        </div>
+      </div>
+      <div class="nota">
+        En <strong>2022</strong>, el maestro Ishiyama le entregó a Nicolás el cinturón negro que él mismo usó durante más de <strong>sesenta años</strong>. En el karate tradicional ese gesto no es un regalo: es la transmisión de una responsabilidad.
+      </div>
+    </section>
+
+    <section class="blk">
+      <div class="blk-head"><span class="kanji jp">三</span><h2>Los tres caminos</h2></div>
+      <div class="caminos">
+        <div class="camino" style="--c: var(--shu)">
+          <div class="k jp">武</div>
+          <div>
+            <div class="t">Artes marciales</div>
+            <div class="d">Karate Shotokan · Jiu-Jitsu Brasileño · Defensa Personal</div>
+          </div>
+        </div>
+        <div class="camino" style="--c: var(--wa)">
+          <div class="k jp">和</div>
+          <div>
+            <div class="t">Salud y bienestar</div>
+            <div class="d">Yoga · Meditación · Masajes</div>
+          </div>
+        </div>
+        <div class="camino" style="--c: var(--bun)">
+          <div class="k jp">文</div>
+          <div>
+            <div class="t">Cultura japonesa</div>
+            <div class="d">Idioma japonés · Filosofía y Budō</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="blk">
+      <div class="blk-head"><span class="kanji jp">今</span><h2 id="hoy-t">Hoy en el dojo</h2></div>
+      <div class="hoy-lista" id="hoy"></div>
+    </section>
+
+    <section class="blk">
+      <div class="blk-head"><span class="kanji jp">場</span><h2>El lugar</h2></div>
+      <div class="fotos">
+        <img class="foto" src="img/fogon.jpg" alt="La fachada del dojo de noche, con la comunidad alrededor del fogón">
+        <img class="foto" src="img/clase-karate.jpg" alt="Clase de karate dentro del dojo">
+        <img class="foto" src="img/tatami-bjj.jpg" alt="El tatami durante una clase de jiu-jitsu">
+      </div>
+    </section>
+
+    <section class="blk">
+      <div class="blk-head"><span class="kanji jp">門</span><h2>Primera clase</h2></div>
+      <p style="font-size:14px;color:var(--ink-2);line-height:1.6">
+        La clase de prueba es sin costo y no requiere experiencia previa. Vení con ropa cómoda.
+      </p>
+      <div class="contacto">
+        <a class="btn" id="cta-prueba" href="#">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2m5.8 14.16c-.24.68-1.42 1.31-1.97 1.36-.5.05-.97.23-3.29-.69-2.77-1.09-4.53-3.92-4.67-4.1-.13-.19-1.11-1.48-1.11-2.82 0-1.34.7-2 .95-2.28.25-.27.55-.34.73-.34s.37 0 .53.01c.17 0 .4-.06.62.48.24.57.8 1.97.87 2.11.07.14.12.31.02.5-.09.19-.14.31-.28.47-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.27.72 1.19 1.55 1.93 1.06.95 1.96 1.24 2.24 1.38.28.14.44.12.6-.07.17-.19.7-.81.88-1.09.19-.28.37-.23.62-.14.25.09 1.6.75 1.87.89.28.14.46.21.53.32.07.12.07.66-.17 1.34"/></svg>
+          Reservar clase de prueba
+        </a>
+        <a class="btn ghost" href="https://maps.app.goo.gl/6Z46hs1wAzpExeAs8" target="_blank" rel="noopener">Cómo llegar</a>
+        <a class="btn ghost" href="https://www.instagram.com/dojokatsuya_ishiyama/" target="_blank" rel="noopener">@dojokatsuya_ishiyama</a>
+      </div>
+    </section>
+
+    <div class="cierre">
+      <div class="k jp">在道場、皆平等</div>
+      <div class="t">En el dojo somos todos iguales</div>
+    </div>
+  </div>
+
+  <!-- ══════════ HORARIOS ══════════ -->
+  <div class="view" id="v-horarios">
+    <section class="blk" style="border-bottom:0">
+      <div class="blk-head"><span class="kanji jp">時</span><h2>Horarios</h2></div>
+      <div class="filtros" id="filtros"></div>
+      <div id="grilla"></div>
+      <a class="btn ghost" id="wa-horarios" href="#" target="_blank" rel="noopener">¿Dudas con un horario? Escribinos</a>
+    </section>
+  </div>
+
+  <!-- ══════════ DISCIPLINAS ══════════ -->
+  <div class="view" id="v-disciplinas">
+    <section class="blk" style="border-bottom:0">
+      <div class="blk-head"><span class="kanji jp">道</span><h2>Disciplinas</h2></div>
+      <div id="discs"></div>
+
+      <div class="fullpass">
+        <div class="eyebrow" style="color:var(--shu)">Full Pass</div>
+        <h3 style="margin-top:6px">Karate + Jiu-Jitsu</h3>
+        <p class="d">
+          Dos disciplinas, un solo pase. La formación completa del artista marcial: de pie con el karate,
+          en el suelo con el jiu-jitsu.
+        </p>
+        <p style="margin-top:8px"><span class="tag-falta">Precio a confirmar</span></p>
+        <a class="btn" id="wa-fullpass" href="#" target="_blank" rel="noopener">Consultar por el Full Pass</a>
+      </div>
+    </section>
+  </div>
+
+  <!-- ══════════ MAESTROS ══════════ -->
+  <div class="view" id="v-maestros">
+    <section class="blk" style="border-bottom:0">
+      <div class="blk-head"><span class="kanji jp">師</span><h2>Maestros</h2></div>
+
+      <article class="maestro" style="--c: var(--shu); --c-soft: var(--shu-soft)">
+        <div class="maestro-top">
+          <img class="avatar" src="img/nico.jpg" alt="Nicolás Pereira">
+          <div>
+            <div class="maestro-h">
+              <h3>Nicolás Pereira</h3>
+              <span class="grado">5.º Dan Shotokan</span>
+            </div>
+            <div class="rol2">Director del dojo · Presidente de la ASCJ · Karate y Defensa Personal</div>
+          </div>
+        </div>
+        <p class="bio">
+          Maldonado, 1987. Empezó las artes marciales a los siete años y a los quince se especializó en Shotokan.
+          Su 5.º Dan fue otorgado por el maestro japonés Katsuya Ishiyama, de quien es representante de Ishiyama Ha
+          para Uruguay. Completó su formación en seminarios con Nitsuo Inoue, Masaru Kamino y otros referentes del
+          karate tradicional. Es autor de <em>El Samurái Contemporáneo</em>.
+        </p>
+        <div class="hitos">
+          <div class="hito"><span class="y">2011</span><span>Campeonato Mundial JKA, Tailandia.</span></div>
+          <div class="hito"><span class="y">2016</span><span>Campeonato Mundial WTKF, Polonia. 6.º puesto en kumite por equipos.</span></div>
+          <div class="hito"><span class="y">2021</span><span>Funda la Asociación Sudamericana Cultural Japonesa junto al Sensei Santiago Martina.</span></div>
+          <div class="hito"><span class="y">2022</span><span>Recibe el cinturón negro que Katsuya Ishiyama usó durante más de sesenta años.</span></div>
+          <div class="hito"><span class="y">2024</span><span>Distinguido por la CUBAP por su trayectoria.</span></div>
+          <div class="hito"><span class="y">2025</span><span>Recibe el cinturón del Sensei Miguel Guerra, pionero del Shotokan en Maldonado.</span></div>
+          <div class="hito"><span class="y">2026</span><span>Publica <em>El Samurái Contemporáneo</em>.</span></div>
+        </div>
+      </article>
+
+      <article class="maestro" style="--c: var(--shu); --c-soft: var(--shu-soft)">
+        <div class="maestro-top">
+          <img class="avatar" src="img/topo.jpg" alt="Nicolás Colman">
+          <div>
+            <div class="maestro-h">
+              <h3>Nicolás “Topo” Colman</h3>
+              <span class="grado">Cinturón negro BJJ</span>
+            </div>
+            <div class="rol2">Instructor jefe de Jiu-Jitsu Brasilero de la ASCJ</div>
+          </div>
+        </div>
+        <p class="bio">
+          Maldonado, 1989. Inició su camino en el jiu-jitsu brasileño en 2016. Cinturón negro e instructor,
+          formado en la Academia Ratao bajo la dirección del profesor Ricardo Pinheiro, donde desarrolló una base
+          técnica y competitiva sólida. Como deportista representó a Uruguay en competencias nacionales e
+          internacionales, con podios y primeros puestos en Uruguay, Brasil y Argentina. Hoy combina la competencia
+          con la formación de nuevos practicantes.
+        </p>
+      </article>
+
+      <article class="maestro" style="--c: var(--wa); --c-soft: var(--wa-soft)">
+        <div class="maestro-h">
+          <h3>Sofía Ayala</h3>
+          <span class="grado">Yoga y Meditación</span>
+        </div>
+        <div class="rol2">Instructora · Respiración, calma y bienestar</div>
+        <p class="bio">
+          Conduce las clases de yoga y las sesiones de meditación del dojo. Su trabajo abre el ala de salud
+          integral del centro: el mismo principio de disciplina y presencia que el tatami, sin el impacto.
+        </p>
+        <p class="bio"><span class="tag-falta">Falta bio completa</span></p>
+      </article>
+
+      <article class="maestro" style="--c: var(--shu); --c-soft: var(--shu-soft)">
+        <div class="maestro-h">
+          <h3>Sofía Cáceres</h3>
+          <span class="grado">Boxeo Femenino</span>
+        </div>
+        <div class="rol2">Boxeadora · Grupos exclusivamente femeninos</div>
+        <p class="bio">
+          Dirige el espacio de boxeo femenino del dojo: técnica, bolsa y acondicionamiento en un grupo solo de mujeres.
+        </p>
+        <p class="bio"><span class="tag-falta">Falta bio completa</span></p>
+      </article>
+    </section>
+  </div>
+
+  <!-- ══════════ CAMPUS ══════════ -->
+  <div class="view" id="v-campus">
+    <section class="blk">
+      <div class="blk-head"><span class="kanji jp">書</span><h2>El libro</h2></div>
+      <div class="libro">
+        <img class="flyer" src="img/libro.jpg" alt="El Samurái Contemporáneo, primer libro de Nicolás Pereira">
+        <div>
+          <h3>El Samurái Contemporáneo</h3>
+          <div class="it">Aprendiendo a vivir</div>
+          <p class="d">
+            Nicolás Pereira · Editorial Deserets. Sobre disciplina, filosofía japonesa, fortaleza interior y cómo
+            aplicar esos principios a la vida cotidiana.
+          </p>
+          <p><span class="tag-falta">Falta link de compra</span></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="blk">
+      <div class="blk-head"><span class="kanji jp">棚</span><h2>Biblioteca del dojo</h2></div>
+      <p style="font-size:13.5px;color:var(--ink-2);margin-bottom:6px;line-height:1.55">
+        Lecturas que acompañan el camino. <span class="tag-falta">Lista a curar por el Sensei</span>
+      </p>
+      <div id="biblio"></div>
+    </section>
+
+    <section class="blk">
+      <div class="blk-head"><span class="kanji jp">訓</span><h2>Dojo Kun</h2></div>
+      <p style="font-size:13.5px;color:var(--ink-2);margin-bottom:8px;line-height:1.55">
+        Los cinco preceptos que Funakoshi dejó al Shotokan. Se recitan al cerrar la clase.
+      </p>
+      <div class="kun" id="kun"></div>
+    </section>
+
+    <section class="blk">
+      <div class="blk-head"><span class="kanji jp">帯</span><h2>Camino del cinturón</h2></div>
+      <p style="font-size:13.5px;color:var(--ink-2);margin-bottom:12px;line-height:1.55">
+        Qué kata corresponde a cada grado. <span class="tag-falta">A confirmar con el dojo</span>
+      </p>
+      <img class="flyer" src="img/examen.jpg" alt="Alumnos en seiza durante un examen de grado en el dojo">
+      <div class="cinturones" id="cinturones"></div>
+    </section>
+
+    <section class="blk" style="border-bottom:0">
+      <div class="blk-head"><span class="kanji jp">語</span><h2>Glosario</h2></div>
+      <input class="buscador" id="q" type="search" placeholder="Buscar un término…" aria-label="Buscar en el glosario">
+      <div class="glos" id="glos"></div>
+    </section>
+  </div>
+
+  <nav class="tabs" id="tabs" aria-label="Secciones"></nav>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var WA = "59895733586";
+  var wa = function (msg, num) { return "https://wa.me/" + (num || WA) + "?text=" + encodeURIComponent(msg); };
+
+  var PILAR = { marcial: "var(--shu)", bienestar: "var(--wa)", cultura: "var(--bun)" };
+
+  /* ── Disciplinas ───────────────────────────────────────────── */
+  var DISCIPLINAS = [
+    {
+      id: "karate", nom: "Karate Shotokan", pilar: "marcial",
+      sub: "Martes, jueves y viernes · Sensei Nicolás Pereira",
+      txt: "Karate tradicional japonés en línea directa con Funakoshi. Se trabaja kihon (fundamentos), kata (formas) y kumite (combate). No es sólo pelea: es la construcción del carácter a través de la repetición. También hay clases personales, a coordinar directo con el Sensei.",
+      para: "Niños: martes y jueves 18:30. Adultos: martes 19:30 y viernes 18:30.",
+      prof: "Nicolás Pereira, 5.º Dan",
+      falta: "precio"
+    },
+    {
+      id: "bjj", nom: "Jiu-Jitsu Brasilero", pilar: "marcial",
+      sub: "Lunes y miércoles, 19:00 · Nicolás Colman",
+      txt: "El arte de la suavidad. Lucha de suelo, control y sumisión. El complemento ideal del karate: donde el karate termina de pie, el jiu-jitsu empieza en el piso.",
+      para: "Adultos y adolescentes. Sin experiencia previa.",
+      prof: "Nicolás “Topo” Colman, cinturón negro",
+      tel: "59895733585",
+      falta: "precio"
+    },
+    {
+      id: "defensa", nom: "Defensa Personal", pilar: "marcial",
+      sub: "Integrada a la formación de karate",
+      txt: "Herramientas concretas para situaciones reales: distancia, reacción, desequilibrio y salida. Se apoya en el karate y en el jiu-jitsu, pero el objetivo no es competir, es volver a casa.",
+      para: "Adultos, todos los niveles.",
+      prof: "Nicolás Pereira",
+      falta: "horario y precio"
+    },
+    {
+      id: "boxeo", nom: "Boxeo Femenino", pilar: "marcial",
+      sub: "Sofía Cáceres · Grupos exclusivamente femeninos",
+      txt: "Boxeo para mujeres en el tatami del dojo: técnica, bolsa y acondicionamiento, a cargo de la boxeadora Sofía Cáceres.",
+      para: "Mujeres, todos los niveles.",
+      prof: "Sofía Cáceres",
+      falta: "horario y precio"
+    },
+    {
+      id: "yoga", nom: "Yoga", pilar: "bienestar",
+      sub: "Lunes y miércoles, 10:00 · Sofía Ayala",
+      txt: "Respiración, calma y bienestar. Movilidad, fuerza y presencia. La otra cara de la misma disciplina que se entrena en el tatami.",
+      para: "Todas las edades y niveles.",
+      prof: "Sofía Ayala",
+      falta: "precio"
+    },
+    {
+      id: "meditacion", nom: "Meditación", pilar: "bienestar",
+      sub: "Viernes, 10:00 · Sofía Ayala",
+      txt: "Mokusō: la práctica de sentarse y aquietar la mente. Es la misma que abre y cierra cada clase de karate, acá con el tiempo que merece.",
+      para: "Todas las edades. Sin experiencia previa.",
+      prof: "Sofía Ayala",
+      falta: "precio"
+    },
+    {
+      id: "masajes", nom: "Masajes", pilar: "bienestar",
+      sub: "Con reserva previa",
+      txt: "Sesiones de masaje orientadas a la recuperación del cuerpo que entrena. Se coordinan por WhatsApp.",
+      para: "Alumnos del dojo y público general.",
+      prof: "A confirmar",
+      falta: "quién lo da, precio y disponibilidad"
+    },
+    {
+      id: "japones", nom: "Idioma Japonés", pilar: "cultura",
+      sub: "Clases de japonés",
+      txt: "Aprender el idioma del arte que se practica. El karate está lleno de japonés: los nombres de las técnicas, los kata, el dojo kun. Acá se entiende lo que se dice.",
+      para: "Todos los niveles.",
+      prof: "A confirmar",
+      falta: "quién lo da, horario y precio"
+    }
+  ];
+
+  /* ── Horario semanal ───────────────────────────────────────── */
+  var DIAS = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+  var CLASES = [
+    { d: 1, ini: "10:00", fin: "11:00", nom: "Yoga",                pilar: "bienestar", prof: "Sofía Ayala",     ok: true },
+    { d: 1, ini: "19:00", fin: "20:00", nom: "Jiu-Jitsu Brasilero", pilar: "marcial",   prof: "Nicolás Colman",  ok: true },
+    { d: 2, ini: "18:30", fin: "19:30", nom: "Karate · Niños",      pilar: "marcial",   prof: "Nicolás Pereira", ok: true },
+    { d: 2, ini: "19:30", fin: "20:30", nom: "Karate · Adultos",    pilar: "marcial",   prof: "Nicolás Pereira", ok: true },
+    { d: 3, ini: "10:00", fin: "11:00", nom: "Yoga",                pilar: "bienestar", prof: "Sofía Ayala",     ok: true },
+    { d: 3, ini: "19:00", fin: "20:00", nom: "Jiu-Jitsu Brasilero", pilar: "marcial",   prof: "Nicolás Colman",  ok: true },
+    { d: 4, ini: "18:30", fin: "19:30", nom: "Karate · Niños",      pilar: "marcial",   prof: "Nicolás Pereira", ok: true },
+    { d: 5, ini: "10:00", fin: "11:00", nom: "Meditación",          pilar: "bienestar", prof: "Sofía Ayala",     ok: true },
+    { d: 5, ini: "18:30", fin: "19:30", nom: "Karate · Adultos",    pilar: "marcial",   prof: "Nicolás Pereira", ok: true }
+  ];
+
+  /* ── Dojo Kun ──────────────────────────────────────────────── */
+  var KUN = [
+    { jp: "人格完成に努むること", ro: "Jinkaku kansei ni tsutomuru koto", es: "Esforzarse por la perfección del carácter" },
+    { jp: "誠の道を守ること",     ro: "Makoto no michi o mamoru koto",     es: "Ser fiel al camino de la verdad" },
+    { jp: "努力の精神を養うこと", ro: "Doryoku no seishin o yashinau koto", es: "Cultivar el espíritu de esfuerzo" },
+    { jp: "礼儀を重んずること",   ro: "Reigi o omonzuru koto",             es: "Honrar los principios de la etiqueta" },
+    { jp: "血気の勇を戒むること", ro: "Kekki no yū o imashimuru koto",     es: "Dominar la impulsividad" }
+  ];
+
+  /* ── Cinturones ────────────────────────────────────────────── */
+  var CINTURONES = [
+    { n: "Blanco",   kyu: "9.º kyu", sw: "#F5F2EA", kata: "Taikyoku Shodan" },
+    { n: "Amarillo", kyu: "8.º kyu", sw: "#E0B93C", kata: "Heian Shodan" },
+    { n: "Naranja",  kyu: "7.º kyu", sw: "#D9752B", kata: "Heian Nidan" },
+    { n: "Verde",    kyu: "6.º kyu", sw: "#5B8266", kata: "Heian Sandan" },
+    { n: "Azul",     kyu: "5.º kyu", sw: "#3E6188", kata: "Heian Yondan" },
+    { n: "Morado",   kyu: "4.º kyu", sw: "#7B6FA0", kata: "Heian Godan" },
+    { n: "Marrón",   kyu: "3.º–1.º kyu", sw: "#6B4A32", kata: "Tekki Shodan" },
+    { n: "Negro",    kyu: "1.º Dan", sw: "#1B1714", kata: "Bassai Dai" }
+  ];
+
+  /* ── Glosario ──────────────────────────────────────────────── */
+  var GLOSARIO = [
+    { w: "Dojo",      jp: "道場",   m: "El lugar donde se recorre el camino. No es un gimnasio." },
+    { w: "Budō",      jp: "武道",   m: "La vía marcial. El arte marcial entendido como camino de vida." },
+    { w: "Sensei",    jp: "先生",   m: "El que nació antes. El maestro." },
+    { w: "Shihan",    jp: "師範",   m: "Maestro de maestros. Grado de alta jerarquía." },
+    { w: "Senpai",    jp: "先輩",   m: "El alumno más antiguo. Guía al que llega." },
+    { w: "Kōhai",     jp: "後輩",   m: "El alumno más nuevo." },
+    { w: "Kihon",     jp: "基本",   m: "Los fundamentos. La base de todo." },
+    { w: "Kata",      jp: "型",     m: "Forma. Secuencia de técnicas contra adversarios imaginarios." },
+    { w: "Kumite",    jp: "組手",   m: "Combate. El encuentro con el otro." },
+    { w: "Rei",       jp: "礼",     m: "El saludo. Empieza y termina todo." },
+    { w: "Osu",       jp: "押忍",   m: "Perseverar bajo presión. Se usa para asentir y para aguantar." },
+    { w: "Zanshin",   jp: "残心",   m: "Atención continua. La mente sigue despierta después de la técnica." },
+    { w: "Mokusō",    jp: "黙想",   m: "Meditación en silencio. Abre y cierra la clase." },
+    { w: "Kiai",      jp: "気合",   m: "La unión del espíritu. El grito que acompaña la técnica." },
+    { w: "Seiza",     jp: "正座",   m: "Sentarse formalmente sobre las rodillas." },
+    { w: "Obi",       jp: "帯",     m: "El cinturón. Marca el grado." },
+    { w: "Keikogi",   jp: "稽古着", m: "El uniforme de entrenamiento. El 'karategi'." },
+    { w: "Kyu",       jp: "級",     m: "Los grados previos al cinturón negro. Van en descenso." },
+    { w: "Dan",       jp: "段",     m: "Los grados de cinturón negro. Van en ascenso." },
+    { w: "Hajime",    jp: "始め",   m: "Comiencen." },
+    { w: "Yame",      jp: "止め",   m: "Alto." },
+    { w: "Karate-dō", jp: "空手道", m: "El camino de la mano vacía." }
+  ];
+
+  /* ── Utilidades ────────────────────────────────────────────── */
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var el = function (t, c, h) {
+    var n = document.createElement(t);
+    if (c) n.className = c;
+    if (h != null) n.innerHTML = h;
+    return n;
+  };
+  var esc = function (s) {
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+    });
+  };
+  var hoy = new Date().getDay();
+
+  /* ── Fila de clase ─────────────────────────────────────────── */
+  function filaClase(c) {
+    var n = el("div", "clase" + (c.ok ? "" : " tent"));
+    n.style.setProperty("--c", PILAR[c.pilar]);
+    n.innerHTML =
+      '<div class="hora">' + c.ini + '<small>' + c.fin + '</small></div>' +
+      '<div><div class="nom">' + esc(c.nom) + '</div>' +
+      '<div class="meta">' + esc(c.prof) + '</div>' +
+      (c.ok ? '' : '<span class="tag-falta">A confirmar</span>') + '</div>';
+    return n;
+  }
+
+  /* ── Hoy en el dojo (consciente de la hora real) ───────────── */
+  (function () {
+    var cont = $("#hoy");
+    var t = $("#hoy-t");
+    var ahora = new Date();
+    var min = ahora.getHours() * 60 + ahora.getMinutes();
+    var aMin = function (h) { return parseInt(h.slice(0, 2), 10) * 60 + parseInt(h.slice(3), 10); };
+    t.textContent = "Hoy, " + DIAS[hoy].toLowerCase();
+
+    var quedan = CLASES.filter(function (c) { return c.d === hoy && aMin(c.fin) > min; })
+      .sort(function (a, b) { return a.ini.localeCompare(b.ini); });
+
+    if (quedan.length) {
+      quedan.forEach(function (c) {
+        var f = filaClase(c);
+        if (aMin(c.ini) <= min) {
+          $(".nom", f).insertAdjacentHTML("afterend", '<span class="tag-now">En curso ahora</span>');
+        }
+        cont.appendChild(f);
+      });
+      return;
+    }
+
+    var habiaHoy = CLASES.some(function (c) { return c.d === hoy; });
+    for (var dd = 1; dd <= 7; dd++) {
+      var d2 = (hoy + dd) % 7;
+      var prox = CLASES.filter(function (c) { return c.d === d2; })
+        .sort(function (a, b) { return a.ini.localeCompare(b.ini); });
+      if (prox.length) {
+        cont.appendChild(el("p", "hoy-vacio",
+          (habiaHoy ? "Por hoy el dojo ya cerró." : "Hoy el dojo descansa.") +
+          " Próximas clases: " + DIAS[d2].toLowerCase() + "."));
+        prox.forEach(function (c) { cont.appendChild(filaClase(c)); });
+        return;
+      }
+    }
+  })();
+
+  /* ── Grilla de horarios + filtros ──────────────────────────── */
+  var filtro = "todo";
+  var FILTROS = [
+    { id: "todo",      lab: "Todo",      c: "var(--ink)" },
+    { id: "marcial",   lab: "武 Marcial",   c: PILAR.marcial },
+    { id: "bienestar", lab: "和 Bienestar", c: PILAR.bienestar },
+    { id: "cultura",   lab: "文 Cultura",   c: PILAR.cultura }
+  ];
+
+  function pintarGrilla() {
+    var g = $("#grilla");
+    g.innerHTML = "";
+    var vistos = 0;
+    for (var d = 1; d <= 6; d++) {
+      var lista = CLASES.filter(function (c) {
+        return c.d === d && (filtro === "todo" || c.pilar === filtro);
+      }).sort(function (a, b) { return a.ini.localeCompare(b.ini); });
+      if (!lista.length) continue;
+      vistos++;
+      var h = el("div", "dia-h" + (d === hoy ? " es-hoy" : ""), esc(DIAS[d]) + (d === hoy ? " · hoy" : ""));
+      g.appendChild(h);
+      var grupo = el("div", "dia-grupo");
+      lista.forEach(function (c) { grupo.appendChild(filaClase(c)); });
+      g.appendChild(grupo);
+    }
+    if (!vistos) g.appendChild(el("p", "hoy-vacio", "No hay clases de este camino todavía."));
+  }
+
+  (function () {
+    var f = $("#filtros");
+    FILTROS.forEach(function (x) {
+      var b = el("button", "chip", x.lab);
+      b.style.setProperty("--c", x.c);
+      b.setAttribute("aria-pressed", String(x.id === filtro));
+      b.addEventListener("click", function () {
+        filtro = x.id;
+        Array.prototype.forEach.call(f.children, function (o) {
+          o.setAttribute("aria-pressed", String(o === b));
+        });
+        pintarGrilla();
+      });
+      f.appendChild(b);
+    });
+    pintarGrilla();
+  })();
+
+  /* ── Disciplinas ───────────────────────────────────────────── */
+  (function () {
+    var cont = $("#discs");
+    DISCIPLINAS.forEach(function (d) {
+      var wrap = el("div", "disc");
+      var msg = "Hola! Vi la app del Dojo Katsuya Ishiyama y quiero consultar por " + d.nom + ".";
+      wrap.innerHTML =
+        '<button class="disc-b" aria-expanded="false" style="--c:' + PILAR[d.pilar] + '">' +
+          '<span><span class="t">' + esc(d.nom) + '</span>' +
+          '<span class="s" style="display:block">' + esc(d.sub) + '</span></span>' +
+          '<span class="caret" aria-hidden="true">▸</span>' +
+        '</button>' +
+        '<div class="disc-body">' +
+          '<p>' + esc(d.txt) + '</p>' +
+          '<dl class="dl">' +
+            '<dt>Para quién</dt><dd>' + esc(d.para) + '</dd>' +
+            '<dt>Instructor</dt><dd>' + esc(d.prof) + '</dd>' +
+          '</dl>' +
+          (d.falta ? '<p style="margin-top:10px"><span class="tag-falta">Falta ' + esc(d.falta) + '</span></p>' : '') +
+          '<a class="btn" href="' + wa(msg, d.tel) + '" target="_blank" rel="noopener">Consultar por WhatsApp</a>' +
+        '</div>';
+      var b = $(".disc-b", wrap);
+      b.addEventListener("click", function () {
+        var open = wrap.classList.toggle("open");
+        b.setAttribute("aria-expanded", String(open));
+      });
+      cont.appendChild(wrap);
+    });
+  })();
+
+  /* ── Dojo Kun ──────────────────────────────────────────────── */
+  (function () {
+    var c = $("#kun");
+    KUN.forEach(function (k) {
+      c.appendChild(el("div", "kun-i",
+        '<div class="m jp">一、</div>' +
+        '<div><div class="es">' + esc(k.es) + '</div>' +
+        '<div class="ro">' + esc(k.ro) + '</div></div>'));
+    });
+  })();
+
+  /* ── Cinturones ────────────────────────────────────────────── */
+  (function () {
+    var c = $("#cinturones");
+    CINTURONES.forEach(function (x) {
+      c.appendChild(el("div", "cint",
+        '<div class="sw" style="background:' + x.sw + '"></div>' +
+        '<div><div class="n">' + esc(x.n) + '</div>' +
+        '<div style="font-size:11.5px;color:var(--ink-3);font-family:var(--font-mono)">' + esc(x.kyu) + '</div></div>' +
+        '<div class="kata">' + esc(x.kata) + '</div>'));
+    });
+  })();
+
+  /* ── Glosario + buscador ───────────────────────────────────── */
+  (function () {
+    var c = $("#glos");
+    var q = $("#q");
+    function pintar() {
+      var s = q.value.trim().toLowerCase();
+      c.innerHTML = "";
+      var hits = GLOSARIO.filter(function (g) {
+        return !s || g.w.toLowerCase().indexOf(s) > -1 || g.m.toLowerCase().indexOf(s) > -1;
+      });
+      if (!hits.length) {
+        c.appendChild(el("p", "hoy-vacio", "Ningún término coincide con “" + esc(s) + "”."));
+        return;
+      }
+      hits.forEach(function (g) {
+        c.appendChild(el("div", "g-i",
+          '<div class="w">' + esc(g.w) + '<b class="jp">' + g.jp + '</b></div>' +
+          '<div class="m">' + esc(g.m) + '</div>'));
+      });
+    }
+    q.addEventListener("input", pintar);
+    pintar();
+  })();
+
+  /* ── Biblioteca del dojo ───────────────────────────────────── */
+  (function () {
+    var LIBROS = [
+      { t: "Hagakure. El camino del samurái", a: "Yamamoto Tsunetomo · 1716", w: "El código del guerrero contado desde adentro, por un samurái del clan Nabeshima." },
+      { t: "Bushido: el alma de Japón", a: "Inazo Nitobe · 1900", w: "El bushido explicado a Occidente por un académico japonés. La puerta de entrada." },
+      { t: "El libro de los cinco anillos", a: "Miyamoto Musashi · 1645", w: "Estrategia pura, por el espadachín más célebre de Japón. Se lee en una tarde y se estudia toda la vida." },
+      { t: "Karate-Dō: mi camino", a: "Gichin Funakoshi · 1956", w: "La autobiografía del fundador del estilo que se practica en este dojo." },
+      { t: "Los veinte principios rectores del karate", a: "Gichin Funakoshi", w: "La filosofía del Shotokan en veinte máximas comentadas." }
+    ];
+    var c = $("#biblio");
+    LIBROS.forEach(function (l) {
+      c.appendChild(el("div", "lib-i",
+        '<div class="k jp">本</div>' +
+        '<div><div class="t">' + esc(l.t) + '</div>' +
+        '<div class="a">' + esc(l.a) + '</div>' +
+        '<div class="w">' + esc(l.w) + '</div></div>'));
+    });
+  })();
+
+  /* ── CTAs ──────────────────────────────────────────────────── */
+  $("#cta-prueba").href = wa("Hola! Vi la app del Dojo Katsuya Ishiyama y me gustaría coordinar una clase de prueba.");
+  $("#wa-horarios").href = wa("Hola! Quiero confirmar el horario de una clase.");
+  $("#wa-fullpass").href = wa("Hola! Quiero consultar por el Full Pass de karate y jiu-jitsu.");
+
+  /* ── Navegación ────────────────────────────────────────────── */
+  var ICON = {
+    dojo: '<path d="M3 10.5 12 4l9 6.5"/><path d="M5 10v9"/><path d="M19 10v9"/><path d="M3 19h18"/><path d="M9 19v-5h6v5"/>',
+    horarios: '<rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9.5h18"/><path d="M8 3v3"/><path d="M16 3v3"/><path d="M7.5 13.5h3"/><path d="M7.5 17h6"/>',
+    disciplinas: '<circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17"/><path d="M12 12a4.25 4.25 0 0 1 0-8.5"/><path d="M12 12a4.25 4.25 0 0 0 0 8.5"/>',
+    maestros: '<circle cx="9" cy="8" r="3.2"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M16 5.5a3 3 0 0 1 0 5.5"/><path d="M17.5 20a6 6 0 0 0-2.2-4.6"/>',
+    campus: '<path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H10a2 2 0 0 1 2 2v13a2 2 0 0 0-2-2H5.5A1.5 1.5 0 0 1 4 15.5z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H14a2 2 0 0 0-2 2v13a2 2 0 0 1 2-2h4.5a1.5 1.5 0 0 0 1.5-1.5z"/>'
+  };
+  var TABS = [
+    { id: "dojo",        lab: "Dojo" },
+    { id: "horarios",    lab: "Horarios" },
+    { id: "disciplinas", lab: "Disciplinas" },
+    { id: "maestros",    lab: "Maestros" },
+    { id: "campus",      lab: "Campus" }
+  ];
+  var nav = $("#tabs");
+  TABS.forEach(function (t, i) {
+    var b = el("button", null,
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" ' +
+      'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICON[t.id] + '</svg>' +
+      '<span>' + t.lab + '</span>');
+    if (i === 0) b.setAttribute("aria-current", "page");
+    b.addEventListener("click", function () {
+      Array.prototype.forEach.call(nav.children, function (o) { o.removeAttribute("aria-current"); });
+      b.setAttribute("aria-current", "page");
+      Array.prototype.forEach.call(document.querySelectorAll(".view"), function (v) {
+        v.classList.remove("is-active");
+      });
+      $("#v-" + t.id).classList.add("is-active");
+      window.scrollTo({ top: 0, behavior: "instant" });
+    });
+    nav.appendChild(b);
+  });
+})();
+</script>
+
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js");}</script>
+</body>
+</html>
