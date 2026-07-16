@@ -123,7 +123,7 @@
 
   .view { display: none; }
   .view.is-active { display: block; animation: rise .34s cubic-bezier(.2,.7,.3,1) both; }
-  @keyframes rise { from { opacity: 0; transform: translateY(10px); } }
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
   /* ---------- tipografía ---------- */
   h1, h2, h3 { font-family: var(--font-display); font-weight: 600; text-wrap: balance; margin: 0; letter-spacing: -.01em; }
