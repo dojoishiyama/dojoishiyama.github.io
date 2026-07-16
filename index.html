@@ -269,6 +269,30 @@
   }
   .nota strong { color: var(--ink); font-weight: 600; }
 
+  /* retrato del maestro (El linaje) */
+  .retrato { margin: 0 auto 22px; max-width: 250px; }
+  .retrato img {
+    width: 100%;
+    display: block;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+  }
+  .retrato figcaption {
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: 13px;
+    color: var(--ink);
+    margin-top: 10px;
+  }
+  .retrato figcaption span {
+    display: block;
+    font-style: italic;
+    font-size: 11.5px;
+    color: var(--ink-3);
+    margin-top: 2px;
+  }
+
   /* ---------- dos caminos ---------- */
   .caminos { display: flex; flex-direction: column; gap: 9px; }
   .camino {
@@ -763,10 +787,14 @@
       </div>
     </header>
 
-    <img class="portada" src="img/portada.jpg" alt="El Sensei Nicolás Pereira con su hermano en el dojo de madera">
+    <img class="portada" src="img/portada.jpg" alt="Logo del Dojo Katsuya Ishiyama">
 
     <section class="blk">
       <div class="blk-head"><span class="kanji jp">系</span><h2>El linaje</h2></div>
+      <figure class="retrato">
+        <img src="img/ishiyama.jpg" alt="Retrato del Shihan Katsuya Ishiyama en dogi">
+        <figcaption>Shihan Katsuya Ishiyama · 9.º Dan<span>El maestro que da nombre al dojo</span></figcaption>
+      </figure>
       <div class="linaje">
         <div class="nodo">
           <div class="rail"><div class="dot"></div></div>
