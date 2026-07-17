@@ -431,6 +431,16 @@
   .disc-body { padding: 0 16px 16px 18px; display: none; }
   .disc.open .disc-body { display: block; animation: rise .28s ease both; }
   .disc-body p { font-size: 14px; color: var(--ink-2); line-height: 1.6; }
+  .disc-img {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    margin-bottom: 14px;
+    display: block;
+  }
   .dl { margin-top: 12px; display: grid; grid-template-columns: 92px 1fr; gap: 6px 12px; font-size: 13.5px; }
   .dl dt { color: var(--ink-3); font-family: var(--font-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; padding-top: 3px; }
   .dl dd { margin: 0; color: var(--ink); }
@@ -855,7 +865,7 @@
       <div class="blk-head"><span class="kanji jp">場</span><h2>El lugar</h2></div>
       <div class="fotos">
         <img class="foto" src="img/fogon.jpg" alt="La fachada del dojo de noche, con la comunidad alrededor del fogón">
-        <img class="foto" src="img/clase-karate.jpg" alt="Clase de karate dentro del dojo">
+        <img class="foto" src="img/nico-lucas.jpg" alt="El Sensei Nicolás Pereira con su hermano en el dojo">
         <img class="foto" src="img/tatami-bjj.jpg" alt="El tatami durante una clase de jiu-jitsu">
       </div>
     </section>
@@ -928,9 +938,8 @@
         <h3 style="margin-top:6px">Karate + Jiu-Jitsu</h3>
         <p class="d">
           Dos disciplinas, un solo pase. La formación completa del artista marcial: de pie con el karate,
-          en el suelo con el jiu-jitsu.
+          en el suelo con el jiu-jitsu. Consultá el valor por WhatsApp.
         </p>
-        <p style="margin-top:8px"><span class="tag-falta">Precio a confirmar</span></p>
         <a class="btn" id="wa-fullpass" href="#" target="_blank" rel="noopener">Consultar por el Full Pass</a>
       </div>
     </section>
@@ -1066,7 +1075,7 @@
     <section class="blk">
       <div class="blk-head"><span class="kanji jp">棚</span><h2>Biblioteca del dojo</h2></div>
       <p style="font-size:13.5px;color:var(--ink-2);margin-bottom:6px;line-height:1.55">
-        Lecturas que acompañan el camino. <span class="tag-falta">Lista a curar por el Sensei</span>
+        Lecturas recomendadas para acompañar el camino.
       </p>
       <div id="biblio"></div>
     </section>
@@ -1082,9 +1091,8 @@
     <section class="blk">
       <div class="blk-head"><span class="kanji jp">帯</span><h2>Camino del cinturón</h2></div>
       <p style="font-size:13.5px;color:var(--ink-2);margin-bottom:12px;line-height:1.55">
-        Qué kata corresponde a cada grado. <span class="tag-falta">A confirmar con el dojo</span>
+        El recorrido del karateka, del cinturón blanco al negro, y el kata de cada grado.
       </p>
-      <img class="flyer" src="img/examen.jpg" alt="Alumnos en seiza durante un examen de grado en el dojo">
       <div class="cinturones" id="cinturones"></div>
     </section>
 
@@ -1116,7 +1124,8 @@
       modalidad: "Grupal · presencial",
       para: "Niños: martes y jueves 18:30. Adultos: martes 19:30 y viernes 18:30.",
       prof: "Nicolás Pereira, 5.º Dan",
-      falta: "precio"
+      valor: "A consultar por WhatsApp",
+      img: "img/karate-makiwara.jpg"
     },
     {
       id: "bjj", nom: "Jiu-Jitsu Brasilero", pilar: "marcial",
@@ -1126,7 +1135,8 @@
       para: "Adultos y adolescentes. Sin experiencia previa.",
       prof: "Nicolás “Topo” Colman, cinturón negro",
       tel: "59895733585",
-      falta: "precio"
+      valor: "A consultar por WhatsApp",
+      img: "img/mascota-topo.jpg"
     },
     {
       id: "defensa", nom: "Defensa Personal", pilar: "marcial",
@@ -1135,7 +1145,7 @@
       modalidad: "Grupal · presencial",
       para: "Adultos, todos los niveles.",
       prof: "Nicolás Pereira",
-      falta: "horario y precio"
+      valor: "A consultar por WhatsApp"
     }
   ];
 
@@ -1321,13 +1331,14 @@
           '<span class="caret" aria-hidden="true">▸</span>' +
         '</button>' +
         '<div class="disc-body">' +
+          (d.img ? '<img class="disc-img" src="' + d.img + '" alt="' + esc(d.nom) + '">' : '') +
           '<p>' + esc(d.txt) + '</p>' +
           '<dl class="dl">' +
             '<dt>Modalidad</dt><dd><span class="modtag">' + esc(d.modalidad) + '</span></dd>' +
             '<dt>Para quién</dt><dd>' + esc(d.para) + '</dd>' +
             '<dt>Instructor</dt><dd>' + esc(d.prof) + '</dd>' +
+            (d.valor ? '<dt>Valor</dt><dd>' + esc(d.valor) + '</dd>' : '') +
           '</dl>' +
-          (d.falta ? '<p style="margin-top:10px"><span class="tag-falta">Falta ' + esc(d.falta) + '</span></p>' : '') +
           '<a class="btn" href="' + wa(msg, d.tel) + '" target="_blank" rel="noopener">Consultar por WhatsApp</a>' +
         '</div>';
       var b = $(".disc-b", wrap);
