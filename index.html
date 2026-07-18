@@ -237,6 +237,7 @@
   .nodo:nth-child(1) { animation-delay: .10s; }
   .nodo:nth-child(2) { animation-delay: .24s; }
   .nodo:nth-child(3) { animation-delay: .38s; }
+  .nodo:nth-child(4) { animation-delay: .52s; }
   .nodo:last-child { padding-bottom: 0; }
   .nodo .rail { position: relative; display: flex; justify-content: center; }
   .nodo .dot {
@@ -292,6 +293,26 @@
     color: var(--ink-3);
     margin-top: 2px;
   }
+
+  /* ---------- las dos artes (home) ---------- */
+  .artes { display: flex; flex-direction: column; gap: 10px; }
+  .arte {
+    display: grid; grid-template-columns: 96px 1fr; gap: 14px; align-items: center;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--c);
+    border-radius: 10px;
+    padding: 12px;
+  }
+  .arte img { width: 96px; height: 96px; object-fit: cover; border-radius: 8px; border: 1px solid var(--line); display: block; }
+  .arte .ja { font-family: var(--font-jp); color: var(--c); font-size: 13px; line-height: 1; }
+  .arte h3 { font-size: 16.5px; margin-top: 4px; }
+  .arte p { font-size: 12.5px; color: var(--ink-2); margin-top: 4px; line-height: 1.45; }
+  .arte .lnk {
+    margin-top: 8px; font: inherit; font-size: 12.5px; font-weight: 600;
+    color: var(--c); background: none; border: 0; padding: 0; cursor: pointer;
+  }
+  .arte .lnk:hover { text-decoration: underline; }
 
   /* ---------- dos caminos ---------- */
   .caminos { display: flex; flex-direction: column; gap: 9px; }
@@ -816,8 +837,15 @@
         <div class="nodo">
           <div class="rail"><div class="dot"></div></div>
           <div>
+            <div class="nom">Makoto Gima</div>
+            <div class="rol">Alumno de Funakoshi y, en 1923, el primer cinturón negro de la historia del karate. Fundador de la línea Gima-Ha.</div>
+          </div>
+        </div>
+        <div class="nodo">
+          <div class="rail"><div class="dot"></div></div>
+          <div>
             <div class="nom">Shihan Katsuya Ishiyama</div>
-            <div class="rol">9.º Dan. Alumno directo de Funakoshi. El dojo lleva su nombre.</div>
+            <div class="rol">9.º Dan. Alumno de Gima Makoto Sensei. El dojo lleva su nombre.</div>
           </div>
         </div>
         <div class="nodo now">
@@ -830,6 +858,30 @@
       </div>
       <div class="nota">
         En <strong>2022</strong>, el maestro Ishiyama le entregó a Nicolás el cinturón negro que él mismo usó durante más de <strong>sesenta años</strong>. En el karate tradicional ese gesto no es un regalo: es la transmisión de una responsabilidad.
+      </div>
+    </section>
+
+    <section class="blk">
+      <div class="blk-head"><span class="kanji jp">二</span><h2>Nuestras dos artes</h2></div>
+      <div class="artes">
+        <article class="arte" style="--c: var(--shu)">
+          <img src="img/karate-makiwara.jpg" alt="Karate Shotokan">
+          <div>
+            <div class="ja jp">空手道</div>
+            <h3>Karate Shotokan</h3>
+            <p>De pie: kihon, kata y kumite. La vía tradicional, con el Sensei Nicolás Pereira.</p>
+            <button class="lnk" data-goto="disciplinas" type="button">Ver clases →</button>
+          </div>
+        </article>
+        <article class="arte" style="--c: var(--shu)">
+          <img src="img/mascota-topo.jpg" alt="Jiu-Jitsu Brasilero">
+          <div>
+            <div class="ja jp">柔術</div>
+            <h3>Jiu-Jitsu Brasilero</h3>
+            <p>En el suelo: control y sumisión, el arte de la suavidad. Con Nicolás “Topo” Colman.</p>
+            <button class="lnk" data-goto="disciplinas" type="button">Ver clases →</button>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -1461,6 +1513,11 @@
 
   /* ── Cross-link Campus → Tienda ────────────────────────────── */
   $("#ir-tienda").addEventListener("click", function () { irA("tienda"); });
+
+  /* ── Botones "Ver clases" del home → pestaña Clases ────────── */
+  Array.prototype.forEach.call(document.querySelectorAll("[data-goto]"), function (b) {
+    b.addEventListener("click", function () { irA(b.getAttribute("data-goto")); });
+  });
 })();
 </script>
 
