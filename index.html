@@ -162,21 +162,14 @@
     border-bottom: 1px solid var(--line);
   }
 
-  /* sello hanko */
+  /* logo del dojo (cuadrado con bordes suavizados) */
   .hanko {
-    width: 54px; height: 54px;
-    border-radius: 5px;
-    background: var(--shu);
-    color: #FFF3ED;
-    display: grid;
-    place-items: center;
-    font-family: var(--font-jp);
-    font-size: 21px;
-    line-height: 1;
-    letter-spacing: -.05em;
-    box-shadow: 0 2px 12px -2px color-mix(in srgb, var(--shu) 55%, transparent);
+    width: 58px; height: 58px;
+    border-radius: 14px;
+    object-fit: cover;
+    display: block;
+    box-shadow: 0 2px 14px -3px rgba(0,0,0,.55);
   }
-  .hanko span { display: block; transform: translateY(-1px); }
 
   .hero h1 {
     font-size: 30px;
@@ -269,6 +262,19 @@
     color: var(--ink-2);
   }
   .nota strong { color: var(--ink); font-weight: 600; }
+
+  /* cartel interno para Nico (revisión de contenido) */
+  .nota-nico {
+    margin-bottom: 14px;
+    padding: 11px 13px;
+    border: 1px dashed var(--oro);
+    border-radius: 8px;
+    background: var(--oro-soft);
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+  .nota-nico b { color: var(--oro); font-weight: 600; }
 
   /* retrato del maestro (El linaje) */
   .retrato { margin: 0 auto 22px; max-width: 250px; }
@@ -864,7 +870,7 @@
   <!-- ══════════ DOJO (home) ══════════ -->
   <div class="view is-active" id="v-dojo">
     <header class="hero">
-      <div class="hanko"><span class="jp">武道</span></div>
+      <img class="hanko" src="img/logo.jpg" alt="Logo del Dojo Katsuya Ishiyama">
       <h1>Dojo Katsuya Ishiyama</h1>
       <p class="sub">Centro de Artes Marciales y Salud Integral · Altos de la Laguna, Maldonado</p>
       <p class="lema">Un dojo · Un camino · Una familia</p>
@@ -875,7 +881,7 @@
       </div>
     </header>
 
-    <img class="portada" src="img/portada.jpg" alt="Logo del Dojo Katsuya Ishiyama">
+    <img class="portada" src="img/clase-karate.jpg" alt="Alumnos en seiza durante la clase de karate en el dojo">
 
     <section class="blk">
       <div class="blk-head"><span class="kanji jp">系</span><h2>El linaje</h2></div>
@@ -1074,8 +1080,9 @@
         <p class="bio">
           Maldonado, 1987. Empezó las artes marciales a los siete años y a los quince se especializó en Shotokan.
           Su 5.º Dan fue otorgado por el maestro japonés Katsuya Ishiyama, de quien es representante de Ishiyama Ha
-          para Uruguay. Completó su formación en seminarios con Nitsuo Inoue, Masaru Kamino y otros referentes del
-          karate tradicional. Es autor de <em>El Samurái Contemporáneo</em>.
+          para Uruguay. Durante unos dieciséis años se formó en la JKA de la mano del Sensei Miguel Guerra, uno de
+          los pioneros del Shotokan en Uruguay y en Maldonado. Completó su formación en seminarios con Nitsuo Inoue,
+          Masaru Kamino y otros referentes del karate tradicional. Es autor de <em>El Samurái Contemporáneo</em>.
         </p>
         <div class="hitos">
           <div class="hito"><span class="y">2011</span><span>Campeonato Mundial JKA, Tailandia.</span></div>
@@ -1090,7 +1097,7 @@
 
       <article class="maestro" style="--c: var(--shu); --c-soft: var(--shu-soft)">
         <div class="maestro-top">
-          <img class="avatar" src="img/topo.jpg" alt="Nicolás Colman">
+          <img class="avatar" src="img/colman.jpg" alt="Nicolás Colman">
           <div>
             <div class="maestro-h">
               <h3>Nicolás “Topo” Colman</h3>
@@ -1105,6 +1112,19 @@
           técnica y competitiva sólida. Como deportista representó a Uruguay en competencias nacionales e
           internacionales, con podios y primeros puestos en Uruguay, Brasil y Argentina. Hoy combina la competencia
           con la formación de nuevos practicantes.
+        </p>
+      </article>
+
+      <article class="maestro raiz" style="--c: var(--shu); --c-soft: var(--shu-soft)">
+        <div class="eyebrow" style="color:var(--ink-3);margin-bottom:14px">Raíces · la formación de Nicolás</div>
+        <figure class="retrato" style="max-width:220px">
+          <img src="img/guerra.jpg" alt="Sensei Miguel Guerra">
+          <figcaption>Sensei Miguel Guerra<span>Pionero del Shotokan en Uruguay y Maldonado</span></figcaption>
+        </figure>
+        <p class="bio">
+          Otro gran pilar en el camino de Nicolás. Lo formó durante unos dieciséis años en la JKA, y es uno de los
+          pioneros del Shotokan en Uruguay y, sin dudas, en Maldonado. En 2025 le entregó su cinturón, un gesto que
+          sella esa transmisión.
         </p>
       </article>
     </section>
@@ -1199,11 +1219,17 @@
     </section>
 
     <section class="blk">
-      <div class="blk-head"><span class="kanji jp">帯</span><h2>Camino del cinturón</h2></div>
-      <p style="font-size:13.5px;color:var(--ink-2);margin-bottom:12px;line-height:1.55">
-        El recorrido del karateka, del cinturón blanco al negro, y el kata de cada grado.
-      </p>
-      <div class="cinturones" id="cinturones"></div>
+      <div class="disc" id="disc-cint">
+        <button class="disc-b" aria-expanded="false" style="--c: var(--shu)">
+          <span><span class="t"><span class="jp" style="color:var(--shu);margin-right:7px">帯</span>Camino del cinturón</span>
+          <span class="s" style="display:block">Del cinturón blanco al negro, y el kata de cada grado</span></span>
+          <span class="caret" aria-hidden="true">▸</span>
+        </button>
+        <div class="disc-body">
+          <div class="nota-nico"><b>Nota para el Sensei:</b> confirmá que el kata asignado a cada grado coincida con el programa del dojo. Avisanos y lo ajustamos.</div>
+          <div class="cinturones" id="cinturones"></div>
+        </div>
+      </div>
     </section>
 
     <section class="blk" style="border-bottom:0">
@@ -1244,7 +1270,7 @@
       modalidad: "Grupal · presencial",
       para: "Adultos y adolescentes. Sin experiencia previa.",
       prof: "Nicolás “Topo” Colman, cinturón negro",
-      tel: "59895733585",
+      tel: "59894652934",
       valor: "A consultar por WhatsApp",
       img: "img/mascota-topo.jpg"
     }
@@ -1565,7 +1591,7 @@
   $("#wa-horarios").href = wa("Hola! Quiero confirmar el horario de una clase.");
   $("#wa-fullpass").href = wa("Hola! Quiero consultar por el Full Pass de karate y jiu-jitsu.");
   $("#wa-karate-part").href = wa("Hola! Quiero consultar por clases particulares de Karate con el Sensei.");
-  $("#wa-bjj-part").href = wa("Hola! Quiero consultar por clases particulares de Jiu-Jitsu.", "59895733585");
+  $("#wa-bjj-part").href = wa("Hola! Quiero consultar por clases particulares de Jiu-Jitsu.", "59894652934");
   $("#wa-libro-reservar").href = wa("Hola! Quiero reservar mi ejemplar de la primera edición de El Samurái Contemporáneo.");
   $("#wa-libro-avisar").href = wa("Hola! Avisame cuando El Samurái Contemporáneo esté disponible, por favor.");
 
@@ -1576,6 +1602,17 @@
   Array.prototype.forEach.call(document.querySelectorAll("[data-goto]"), function (b) {
     b.addEventListener("click", function () { irA(b.getAttribute("data-goto")); });
   });
+
+  /* ── Acordeón de cinturones (cerrado por defecto) ──────────── */
+  (function () {
+    var wrap = $("#disc-cint");
+    if (!wrap) return;
+    var b = $(".disc-b", wrap);
+    b.addEventListener("click", function () {
+      var open = wrap.classList.toggle("open");
+      b.setAttribute("aria-expanded", String(open));
+    });
+  })();
 
   /* ── Vida serena: cada seccion emerge al llegar (Ma · 間) ──── */
   var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
