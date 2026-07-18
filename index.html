@@ -794,9 +794,66 @@
   .cierre .k { font-family: var(--font-jp); font-size: 15px; color: var(--ink-3); }
   .cierre .t { font-size: 12px; color: var(--ink-3); margin-top: 6px; }
 
+  /* ---------- vida: movimiento sereno (Ma · 間) ---------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity .9s cubic-bezier(.22,.61,.36,1), transform .9s cubic-bezier(.22,.61,.36,1);
+  }
+  .reveal.vis { opacity: 1; transform: none; }
+
+  /* el sello se estampa, la tinta se asienta */
+  @keyframes stamp {
+    0% { opacity: 0; transform: scale(1.55) rotate(-7deg); }
+    62% { opacity: 1; transform: scale(.96) rotate(1.2deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0); }
+  }
+  @keyframes tinta { from { opacity: 0; transform: translateY(9px); } to { opacity: 1; transform: none; } }
+  .hero .hanko { animation: stamp .65s cubic-bezier(.34,1.35,.5,1) .2s backwards; }
+  .hero h1 { animation: tinta .9s ease .5s backwards; }
+  .hero .sub { animation: tinta .9s ease .68s backwards; }
+  .hero .lema { animation: tinta .9s ease .86s backwards; }
+  .hero .avales { animation: tinta .9s ease 1.04s backwards; }
+
+  /* el haz de luz respira, lento como mokuso */
+  @keyframes respira { 0%, 100% { opacity: .5; } 50% { opacity: 1; } }
+  .hero::after { animation: respira 9s ease-in-out infinite; }
+
+  .motas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+  /* las tarjetas responden al tacto, sin apuro */
+  .camino, .arte, .clase, .cint, .teaser, .disc, .lib-i {
+    transition: transform .5s cubic-bezier(.22,.61,.36,1), box-shadow .5s ease, border-color .5s ease;
+  }
+  @media (hover: hover) {
+    .camino:hover, .arte:hover, .clase:hover, .cint:hover, .teaser:hover { transform: translateY(-2px); border-color: var(--ink-3); box-shadow: var(--shadow); }
+    .disc:hover { border-color: var(--ink-3); }
+  }
+  .camino:active, .arte:active, .clase:active, .cint:active { transform: scale(.985); }
+
+  nav.tabs button svg { transition: transform .45s cubic-bezier(.34,1.5,.64,1); }
+  nav.tabs button[aria-current="page"] svg { transform: translateY(-1.5px) scale(1.08); }
+
+  .buscador { transition: border-color .4s ease; }
+  .buscador:focus { border-color: var(--shu); outline: none; }
+
+  /* enso: el circulo zen se traza al llegar al final, abierto como manda el wabi-sabi */
+  .enso { display: block; width: 76px; height: 76px; margin: 0 auto 14px; color: var(--ink-3); }
+  .enso circle {
+    fill: none; stroke: currentColor; stroke-width: 3;
+    stroke-linecap: round;
+    stroke-dasharray: 220;
+    stroke-dashoffset: 220;
+    transform: rotate(-98deg);
+    transform-origin: center;
+  }
+  .cierre.vis .enso circle { transition: stroke-dashoffset 2.6s cubic-bezier(.4,0,.25,1) .25s; stroke-dashoffset: 14; }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
     .nodo { opacity: 1; }
+    .reveal { opacity: 1; transform: none; }
+    .enso circle { stroke-dashoffset: 14; }
   }
 </style>
 </head>
@@ -938,6 +995,7 @@
     </section>
 
     <div class="cierre">
+      <svg class="enso" viewBox="0 0 76 76" aria-hidden="true"><circle cx="38" cy="38" r="35"/></svg>
       <div class="k jp">在道場、皆平等</div>
       <div class="t">En el dojo somos todos iguales</div>
     </div>
@@ -1518,6 +1576,71 @@
   Array.prototype.forEach.call(document.querySelectorAll("[data-goto]"), function (b) {
     b.addEventListener("click", function () { irA(b.getAttribute("data-goto")); });
   });
+
+  /* ── Vida serena: cada seccion emerge al llegar (Ma · 間) ──── */
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  (function () {
+    if (!("IntersectionObserver" in window)) return;
+    var objetivos = document.querySelectorAll("section.blk, .cierre, .portada");
+    var io = new IntersectionObserver(function (entradas) {
+      entradas.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        en.target.classList.add("vis");
+        io.unobserve(en.target);
+      });
+    }, { threshold: 0.1, rootMargin: "0px 0px -6% 0px" });
+    Array.prototype.forEach.call(objetivos, function (el, i) {
+      el.classList.add("reveal");
+      el.style.transitionDelay = (i % 3) * 80 + "ms";
+      io.observe(el);
+    });
+  })();
+
+  /* ── Motas de polvo en el haz de luz (komorebi) ────────────── */
+  (function () {
+    if (reduceMotion) return;
+    var hero = document.querySelector(".hero");
+    if (!hero || !window.requestAnimationFrame) return;
+    var c = document.createElement("canvas");
+    c.className = "motas";
+    c.setAttribute("aria-hidden", "true");
+    hero.insertBefore(c, hero.firstChild);
+    var ctx = c.getContext("2d");
+    var W = 0, H = 0, t = 0;
+    var motas = [];
+    for (var i = 0; i < 14; i++) {
+      motas.push({
+        x: Math.random(), y: Math.random(),
+        r: 0.6 + Math.random() * 1.5,
+        v: 0.0004 + Math.random() * 0.0011,
+        f: Math.random() * 6.283
+      });
+    }
+    function marco() {
+      if (hero.clientWidth !== W || hero.clientHeight !== H) {
+        W = c.width = hero.clientWidth;
+        H = c.height = hero.clientHeight;
+      }
+      t += 0.016;
+      if (W > 0 && H > 0) {
+        ctx.clearRect(0, 0, W, H);
+        for (var i = 0; i < motas.length; i++) {
+          var m = motas[i];
+          m.y -= m.v;
+          if (m.y < -0.05) { m.y = 1.05; m.x = Math.random(); }
+          var mx = m.x * W + Math.sin(t * 0.45 + m.f) * 9;
+          var alfa = 0.10 + 0.09 * (0.5 + 0.5 * Math.sin(t * 0.6 + m.f));
+          ctx.beginPath();
+          ctx.arc(mx, m.y * H, m.r, 0, 6.283);
+          ctx.fillStyle = "rgba(214, 176, 96, " + alfa.toFixed(3) + ")";
+          ctx.fill();
+        }
+      }
+      window.requestAnimationFrame(marco);
+    }
+    window.requestAnimationFrame(marco);
+  })();
 })();
 </script>
 
