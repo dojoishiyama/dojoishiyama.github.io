@@ -749,6 +749,16 @@
   .cint .sw { width: 14px; height: 14px; border-radius: 3px; border: 1px solid rgba(128,110,95,.5); }
   .cint .n { font-size: 14px; }
   .cint .kata { font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); text-align: right; }
+  .grados-arte + .grados-arte { margin-top: 20px; }
+  .ga-tit {
+    font-family: var(--font-display);
+    font-size: 14.5px;
+    color: var(--ink);
+    margin-bottom: 9px;
+    display: flex; align-items: baseline; gap: 8px;
+  }
+  .ga-tit .jp { color: var(--shu); font-size: 15px; }
+  .ga-tit .ga-sub { font-size: 11.5px; color: var(--ink-3); font-style: italic; }
 
   .glos { display: flex; flex-direction: column; }
   .g-i {
@@ -1100,8 +1110,8 @@
         <div class="hitos">
           <div class="hito"><span class="y">2011</span><span>Campeonato Mundial JKA, Tailandia.</span></div>
           <div class="hito"><span class="y">2016</span><span>Campeonato Mundial WTKF, Polonia. 6.º puesto en kumite por equipos.</span></div>
-          <div class="hito"><span class="y">2021</span><span>Funda la Asociación Sudamericana Cultural Japonesa junto al Sensei Santiago Martina.</span></div>
           <div class="hito"><span class="y">2022</span><span>Recibe el cinturón negro que Katsuya Ishiyama usó durante más de sesenta años.</span></div>
+          <div class="hito"><span class="y">2024</span><span>Funda la Asociación Sudamericana Cultural Japonesa junto al Sensei Santiago Martina, reconocida por el MEC.</span></div>
           <div class="hito"><span class="y">2024</span><span>Distinguido por la CUBAP por su trayectoria.</span></div>
           <div class="hito"><span class="y">2025</span><span>Recibe el cinturón del Sensei Miguel Guerra, pionero del Shotokan en Maldonado.</span></div>
           <div class="hito"><span class="y">2026</span><span>Publica <em>El Samurái Contemporáneo</em>.</span></div>
@@ -1235,12 +1245,18 @@
       <div class="disc" id="disc-cint">
         <button class="disc-b" aria-expanded="false" style="--c: var(--shu)">
           <span><span class="t"><span class="jp" style="color:var(--shu);margin-right:7px">帯</span>Camino del cinturón</span>
-          <span class="s" style="display:block">Del cinturón blanco al negro, y el kata de cada grado</span></span>
+          <span class="s" style="display:block">Cómo se ordenan los grados en cada arte</span></span>
           <span class="caret" aria-hidden="true">▸</span>
         </button>
         <div class="disc-body">
-          <div class="nota-nico"><b>Nota para el Sensei:</b> confirmá que el kata asignado a cada grado coincida con el programa del dojo. Avisanos y lo ajustamos.</div>
-          <div class="cinturones" id="cinturones"></div>
+          <div class="grados-arte">
+            <div class="ga-tit"><span class="jp">空手</span> Karate Shotokan</div>
+            <div class="cinturones" id="cint-karate"></div>
+          </div>
+          <div class="grados-arte">
+            <div class="ga-tit"><span class="jp">柔術</span> Jiu-Jitsu Brasilero <span class="ga-sub">· adultos</span></div>
+            <div class="cinturones" id="cint-bjj"></div>
+          </div>
         </div>
       </div>
     </section>
@@ -1310,16 +1326,28 @@
   ];
 
   /* ── Cinturones ────────────────────────────────────────────── */
-  var CINTURONES = [
-    { n: "Blanco",   kyu: "9.º kyu", sw: "#F5F2EA", kata: "Taikyoku Shodan" },
-    { n: "Amarillo", kyu: "8.º kyu", sw: "#E0B93C", kata: "Heian Shodan" },
-    { n: "Naranja",  kyu: "7.º kyu", sw: "#D9752B", kata: "Heian Nidan" },
-    { n: "Verde",    kyu: "6.º kyu", sw: "#5B8266", kata: "Heian Sandan" },
-    { n: "Azul",     kyu: "5.º kyu", sw: "#3E6188", kata: "Heian Yondan" },
-    { n: "Morado",   kyu: "4.º kyu", sw: "#7B6FA0", kata: "Heian Godan" },
-    { n: "Marrón",   kyu: "3.º–1.º kyu", sw: "#6B4A32", kata: "Tekki Shodan" },
-    { n: "Negro",    kyu: "1.º Dan", sw: "#1B1714", kata: "Bassai Dai" }
-  ];
+  var CINTURONES = {
+    karate: [
+      { n: "Blanco",        g: "10.º kyu",         sw: "#F5F2EA" },
+      { n: "Amarillo",      g: "9.º kyu",          sw: "#E0B93C" },
+      { n: "Naranja",       g: "8.º kyu",          sw: "#D9752B" },
+      { n: "Verde",         g: "7.º kyu",          sw: "#5B8266" },
+      { n: "Celeste",       g: "6.º kyu",          sw: "#7FB0D0" },
+      { n: "Azul",          g: "5.º kyu",          sw: "#3E6188" },
+      { n: "Violeta",       g: "4.º kyu",          sw: "#7B5EA0" },
+      { n: "Marrón · 1.er", g: "3.º kyu",          sw: "#6B4A32" },
+      { n: "Marrón · 2.º",  g: "2.º kyu",          sw: "#6B4A32" },
+      { n: "Marrón · 3.er", g: "1.º kyu",          sw: "#6B4A32" },
+      { n: "Negro",         g: "Shodan · 1.º Dan", sw: "#1B1714" }
+    ],
+    bjj: [
+      { n: "Blanco",  g: "", sw: "#F5F2EA" },
+      { n: "Azul",    g: "", sw: "#3E6188" },
+      { n: "Violeta", g: "", sw: "#7B5EA0" },
+      { n: "Marrón",  g: "", sw: "#6B4A32" },
+      { n: "Negro",   g: "", sw: "#1B1714" }
+    ]
+  };
 
   /* ── Glosario ──────────────────────────────────────────────── */
   var GLOSARIO = [
@@ -1501,16 +1529,19 @@
     });
   })();
 
-  /* ── Cinturones ────────────────────────────────────────────── */
+  /* ── Cinturones: grados por arte (sin kata) ────────────────── */
   (function () {
-    var c = $("#cinturones");
-    CINTURONES.forEach(function (x) {
-      c.appendChild(el("div", "cint",
-        '<div class="sw" style="background:' + x.sw + '"></div>' +
-        '<div><div class="n">' + esc(x.n) + '</div>' +
-        '<div style="font-size:11.5px;color:var(--ink-3);font-family:var(--font-mono)">' + esc(x.kyu) + '</div></div>' +
-        '<div class="kata">' + esc(x.kata) + '</div>'));
-    });
+    function pintar(cont, lista) {
+      if (!cont) return;
+      lista.forEach(function (x) {
+        cont.appendChild(el("div", "cint",
+          '<div class="sw" style="background:' + x.sw + '"></div>' +
+          '<div class="n">' + esc(x.n) + '</div>' +
+          '<div class="kata">' + esc(x.g || "") + '</div>'));
+      });
+    }
+    pintar($("#cint-karate"), CINTURONES.karate);
+    pintar($("#cint-bjj"), CINTURONES.bjj);
   })();
 
   /* ── Glosario + buscador ───────────────────────────────────── */
@@ -1544,7 +1575,9 @@
       { t: "Bushido: el alma de Japón", a: "Inazo Nitobe · 1900", w: "El bushido explicado a Occidente por un académico japonés. La puerta de entrada." },
       { t: "El libro de los cinco anillos", a: "Miyamoto Musashi · 1645", w: "Estrategia pura, por el espadachín más célebre de Japón. Se lee en una tarde y se estudia toda la vida." },
       { t: "Karate-Dō: mi camino", a: "Gichin Funakoshi · 1956", w: "La autobiografía del fundador del estilo que se practica en este dojo." },
-      { t: "Los veinte principios rectores del karate", a: "Gichin Funakoshi", w: "La filosofía del Shotokan en veinte máximas comentadas." }
+      { t: "Los veinte principios rectores del karate", a: "Gichin Funakoshi", w: "La filosofía del Shotokan en veinte máximas comentadas." },
+      { t: "La ruta del samurái · 1 y 2", a: "Recomendado por el Sensei", w: "El camino del guerrero, en dos tomos." },
+      { t: "Breathe", a: "Familia Gracie", w: "Respiración y mentalidad, desde el linaje del Jiu-Jitsu." }
     ];
     var c = $("#biblio");
     LIBROS.forEach(function (l) {
