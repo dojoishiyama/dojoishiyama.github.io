@@ -737,6 +737,49 @@
     margin-bottom: 14px;
     box-shadow: var(--shadow);
   }
+
+  /* ---------- noticia (aviso temporal, prioridad visual) ---------- */
+  .noticia-card {
+    border: 1px solid color-mix(in srgb, var(--shu) 40%, var(--line));
+    border-radius: 14px;
+    background: var(--shu-soft);
+    padding: 14px;
+  }
+  .noticia-card .flyer { margin-bottom: 14px; }
+  .noticia-tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--bg-2);
+    color: var(--shu);
+    border: 1px solid color-mix(in srgb, var(--shu) 45%, transparent);
+  }
+  .noticia-t { font-family: var(--font-display); font-size: 19px; margin-top: 10px; line-height: 1.25; }
+  .noticia-d { font-size: 13.5px; color: var(--ink-2); line-height: 1.55; margin-top: 8px; }
+  .noticia-datos {
+    display: flex; flex-direction: column; gap: 7px;
+    margin-top: 14px; padding-top: 14px;
+    border-top: 1px solid var(--line-soft);
+  }
+  .noticia-datos .nd { display: grid; grid-template-columns: 17px 1fr; gap: 9px; align-items: center; font-size: 13px; color: var(--ink); }
+  .noticia-datos svg { width: 15px; height: 15px; color: var(--shu); }
+  .noticia-org {
+    font-size: 12px; color: var(--ink-3); line-height: 1.65;
+    margin-top: 14px; padding-top: 14px;
+    border-top: 1px solid var(--line-soft);
+  }
+  .noticia-org strong { color: var(--ink-2); font-weight: 600; }
+  .noticia-warn {
+    display: grid; grid-template-columns: 16px 1fr; gap: 8px;
+    font-size: 12px; color: var(--shu); line-height: 1.5;
+    font-weight: 600;
+    margin-top: 14px;
+  }
+  .noticia-warn svg { width: 15px; height: 15px; margin-top: 1px; }
   .lib-i {
     display: grid; grid-template-columns: 28px 1fr; gap: 13px;
     padding: 12px 0;
@@ -935,6 +978,31 @@
     </header>
 
     <img class="portada" src="img/clase-karate.jpg" alt="Alumnos en seiza durante la clase de karate en el dojo">
+
+    <section class="blk">
+      <div class="blk-head"><span class="kanji jp">急</span><h2>Noticia</h2></div>
+      <div class="noticia-card">
+        <img class="flyer" src="img/seminario-policial.jpg" alt="Afiche: Seminario gratuito de capacitación para funcionarios policiales, con el Sensei Nicolás Pereira">
+        <span class="noticia-tag">Próximo evento · cupos limitados</span>
+        <h3 class="noticia-t">Capacitación exclusiva para funcionarios policiales</h3>
+        <p class="noticia-d">La formación continua es una herramienta fundamental para un servicio profesional, seguro y ajustado al marco legal. Esta jornada reunirá especialistas en defensa personal, táctica y actualización jurídica, brindando conocimientos aplicables a la labor policial diaria.</p>
+        <div class="noticia-datos">
+          <div class="nd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span>Sábado 29 de agosto</span></div>
+          <div class="nd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><span>16:00 a 19:00 horas</span></div>
+          <div class="nd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Dojo Katsuya Ishiyama – Altos de la Laguna, Maldonado</span></div>
+        </div>
+        <div class="noticia-org">
+          <strong>Organiza:</strong> Sindicato de Policías Nacional.<br>
+          <strong>Iniciativa de:</strong> Cristina Leal y Maldonado Seguro.<br>
+          <strong>Con el apoyo de:</strong> Asociación Sudamericana Cultural Japonesa (ASCJ) y Grupo de Formación Táctica Uruguay (GFTU).
+        </div>
+        <div class="noticia-warn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 2 20h20L12 3z"/><path d="M12 9v5M12 17h.01"/></svg>
+          <span>Actividad exclusiva para funcionarios policiales. Cupos limitados.</span>
+        </div>
+        <a class="btn" id="wa-seminario" href="#" target="_blank" rel="noopener">Inscribirme por WhatsApp</a>
+      </div>
+    </section>
 
     <section class="blk">
       <div class="blk-head"><span class="kanji jp">系</span><h2>El linaje</h2></div>
@@ -1689,6 +1757,7 @@
   $("#wa-karate-part").href = wa("Hola! Quiero consultar por clases particulares de Karate con el Sensei.");
   $("#wa-bjj-part").href = wa("Hola! Quiero consultar por clases particulares de Jiu-Jitsu.", "59894652934");
   $("#wa-libro-reservar").href = wa("Hola! Quiero comprar mi ejemplar de El Samurái Contemporáneo.");
+  $("#wa-seminario").href = wa("Hola! Quiero inscribirme al seminario para funcionarios policiales del 29 de agosto.", "59893778715");
 
   /* ── Cross-link Campus → Tienda ────────────────────────────── */
   $("#ir-tienda").addEventListener("click", function () { irA("tienda"); });
