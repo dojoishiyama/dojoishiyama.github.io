@@ -738,7 +738,9 @@
     box-shadow: var(--shadow);
   }
 
-  /* ---------- noticia (aviso temporal, prioridad visual) ---------- */
+  /* ---------- noticia (aviso temporal, prioridad visual) ----------
+     Los estilos quedan listos para el proximo aviso: para publicarlo alcanza
+     con volver a poner la seccion en la home. */
   .noticia-card {
     border: 1px solid color-mix(in srgb, var(--shu) 40%, var(--line));
     border-radius: 14px;
@@ -978,31 +980,6 @@
     </header>
 
     <img class="portada" src="img/clase-karate.jpg" alt="Alumnos en seiza durante la clase de karate en el dojo">
-
-    <section class="blk">
-      <div class="blk-head"><span class="kanji jp">急</span><h2>Noticia</h2></div>
-      <div class="noticia-card">
-        <img class="flyer" src="img/seminario-policial.jpg" alt="Afiche: Seminario gratuito de capacitación para funcionarios policiales, con el Sensei Nicolás Pereira">
-        <span class="noticia-tag">Próximo evento · cupos limitados</span>
-        <h3 class="noticia-t">Capacitación exclusiva para funcionarios policiales</h3>
-        <p class="noticia-d">La formación continua es una herramienta fundamental para un servicio profesional, seguro y ajustado al marco legal. Esta jornada reunirá especialistas en defensa personal, táctica y actualización jurídica, brindando conocimientos aplicables a la labor policial diaria.</p>
-        <div class="noticia-datos">
-          <div class="nd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span>Sábado 29 de agosto</span></div>
-          <div class="nd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><span>16:00 a 19:00 horas</span></div>
-          <div class="nd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Dojo Katsuya Ishiyama – Altos de la Laguna, Maldonado</span></div>
-        </div>
-        <div class="noticia-org">
-          <strong>Organiza:</strong> Sindicato de Policías Nacional.<br>
-          <strong>Iniciativa de:</strong> Cristina Leal y Maldonado Seguro.<br>
-          <strong>Con el apoyo de:</strong> Asociación Sudamericana Cultural Japonesa (ASCJ) y Grupo de Formación Táctica Uruguay (GFTU).
-        </div>
-        <div class="noticia-warn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 2 20h20L12 3z"/><path d="M12 9v5M12 17h.01"/></svg>
-          <span>Actividad exclusiva para funcionarios policiales. Cupos limitados.</span>
-        </div>
-        <a class="btn" id="wa-seminario" href="#" target="_blank" rel="noopener">Inscribirme por WhatsApp</a>
-      </div>
-    </section>
 
     <section class="blk">
       <div class="blk-head"><span class="kanji jp">系</span><h2>El linaje</h2></div>
@@ -1757,7 +1734,6 @@
   $("#wa-karate-part").href = wa("Hola! Quiero consultar por clases particulares de Karate con el Sensei.");
   $("#wa-bjj-part").href = wa("Hola! Quiero consultar por clases particulares de Jiu-Jitsu.", "59894652934");
   $("#wa-libro-reservar").href = wa("Hola! Quiero comprar mi ejemplar de El Samurái Contemporáneo.");
-  $("#wa-seminario").href = wa("Hola! Quiero inscribirme al seminario para funcionarios policiales del 29 de agosto.", "59893778715");
 
   /* ── Cross-link Campus → Tienda ────────────────────────────── */
   $("#ir-tienda").addEventListener("click", function () { irA("tienda"); });
